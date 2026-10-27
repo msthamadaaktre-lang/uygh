@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Mini App - GigaPub Reward Ad</title>
+    
+    <!-- ১. GigaPub-এর অফিশিয়াল SDK স্ক্রিপ্ট (আপনার জোন আইডি ৮৮৫৮ সহ) -->
+    <script src="https://giga.pub/sdk.js" data-zone="8858" async></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #0f172a;
+            color: #ffffff;
+            margin-top: 50px;
+        }
+        .btn {
+            background-color: #22c55e;
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        #reward-status {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>মিনি অ্যাপ রিওয়ার্ড পয়েন্ট</h1>
+    <p>নিচের বাটনে ক্লিক করে সম্পূর্ণ ভিডিও বিজ্ঞাপনটি দেখলে রিওয়ার্ড পাবেন!</p>
+
+    <!-- রিওয়ার্ড ভিডিও দেখার বাটন -->
+    <button class="btn" onclick="watchRewardAd()">বিজ্ঞাপন দেখুন (Watch Ad)</button>
+
+    <div id="reward-status"></div>
+
+    <script>
+        // ২. রিওয়ার্ড অ্যাড দেখানোর ফাংশন
+        function watchRewardAd() {
+            const statusDiv = document.getElementById("reward-status");
+            statusDiv.innerText = "বিজ্ঞাপন লোড হচ্ছে...";
+
+            // GigaPub SDK ফাংশন কল (এটি আপনার ড্যাশবোর্ডের গাইড অনুযায়ী সামান্য ভিন্ন হতে পারে)
+            if (typeof showGigaPubAd === "function") {
+                showGigaPubAd()
+                    .then(() => {
+                        // ইউজার সফলভাবে বিজ্ঞাপনটি সম্পূর্ণ দেখলে এই অংশ কাজ করবে
+                        statusDiv.innerText = "অভিনন্দন! আপনি সফলভাবে বিজ্ঞাপনটি দেখেছেন এবং রিওয়ার্ড পেয়েছেন। 🎉";
+                        
+                        // এখানে ইউজারের পয়েন্ট বা ব্যালেন্স বাড়িয়ে দেওয়ার কোড লিখতে পারেন
+                        // যেমন: addCoinsToUser(10); 
+                    })
+                    .catch((error) => {
+                        // ইউজার বিজ্ঞাপন না দেখে কেটে দিলে বা লো드 না হলে
+                        statusDiv.innerText = "বিজ্ঞাপনটি দেখা সম্পন্ন হয়নি বা লোড নিতে সমস্যা হয়েছে।";
+                        console.error(error);
+                    });
+            } else {
+                statusDiv.innerText = "বিজ্ঞাপন নেটওয়ার্ক লোড হতে একটু সময় নিচ্ছে, দয়া করে আবার চেষ্টা করুন।";
+            }
+        }
+    </script>
+
+</body>
+</html>
